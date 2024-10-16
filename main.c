@@ -4,9 +4,18 @@
 
 int main()
 {
-    int * num;
-    num = my_malloc(sizeof(int));
-    printf("Current sbrk: %p \n", num);
+    int *num = (int *)my_malloc(sizeof(int));
+    if (num == NULL) 
+    {
+        printf("Error al asignar memoria.\n");
+        return 1;
+    }
+
+    *num = 42;
+
+    printf("%i\n",*num);
+    
+    
 
     return 0;   
 }

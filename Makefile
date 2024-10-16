@@ -1,4 +1,4 @@
-TARGET = myMallocApp
+TARGET = main
 
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
