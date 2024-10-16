@@ -4,8 +4,9 @@
 
 int main()
 {
-    printf("Se ejecuta myMalloc:\n");
-    my_malloc(sizeof(int));  
+    int * num;
+    num = my_malloc(sizeof(int));
+    printf("Current sbrk: %p \n", num);
 
     return 0;   
 }
