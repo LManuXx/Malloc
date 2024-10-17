@@ -4,9 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <fcntl.h>
 #include "myMalloc.h"
-
 
 Block *head = NULL;
 
@@ -14,17 +12,17 @@ void *my_malloc(size_t size)
 {
     if (size == 0) 
     {
-        printf("\nError: tamaño 0 no es válido\n");
+        printf("\nError: size 0 is not valid\n");
         return NULL;
     }
 
     size_t totalSize = (size + sizeof(Block) + 7) & ~7;
 
-    void *ptr = mmap(NULL, totalSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS , -1, 0);
+    void *ptr = mmap(NULL, totalSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
     if (ptr == MAP_FAILED) 
     {
-        printf("\nError: no se pudo asignar memoria con mmap\n");
+        printf("\nError: could not allocate memory with mmap\n");
         return NULL;
     }
 
@@ -33,7 +31,7 @@ void *my_malloc(size_t size)
     newBlock->size = size;
     newBlock->next = NULL;
 
-    printf("\nBloque asignado en: %p, tamaño solicitado: %zu\n", (void *)newBlock, size);
+    printf("\nBlock allocated at: %p, requested size: %zu\n", (void *)newBlock, size);
 
     if (head == NULL) 
     {
@@ -51,7 +49,6 @@ void *my_malloc(size_t size)
 
     return (void *)(newBlock + 1);
 }
-
 
 void my_free(void *ptr)
 {
@@ -78,8 +75,8 @@ void my_free(void *ptr)
     block->next = NULL;
 
     if (munmap(block, totalSize) == -1) {
-        perror("Error al liberar la memoria con munmap");
+        perror("Error when freeing memory with munmap");
     } else {
-        printf("Bloque liberado correctamente en: %p\n", (void *)block);
+        printf("Block successfully freed at: %p\n", (void *)block);
     }
 }
