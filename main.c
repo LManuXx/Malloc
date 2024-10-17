@@ -15,6 +15,9 @@ int main()
     }
 
     my_free(num);    
+    my_free(num2);
+    my_free(ch);
+    my_free(fl);
 
     return 0;   
 }

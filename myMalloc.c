@@ -52,16 +52,34 @@ void *my_malloc(size_t size)
     return (void *)(newBlock + 1);
 }
 
-void my_free(void * ptr)
-{
-    Block *block = (Block*)ptr-1;
-    size_t totalSize = block->size + sizeof(Block);
 
-    if(munmap(block,totalSize) == -1){
-        perror("Error when free memory");
-    }else{
-        printf("Free memory\n");
+void my_free(void *ptr)
+{
+    if (!ptr) {
+        return;
     }
 
+    Block *block = (Block *)ptr - 1;
+    size_t totalSize = block->size + sizeof(Block);
 
+    if (block == head) {
+        head = block->next;
+    } else {
+        Block *aux = head;
+        while (aux && aux->next != block) {
+            aux = aux->next;
+        }
+
+        if (aux) {
+            aux->next = block->next;
+        }
+    }
+
+    block->next = NULL;
+
+    if (munmap(block, totalSize) == -1) {
+        perror("Error al liberar la memoria con munmap");
+    } else {
+        printf("Bloque liberado correctamente en: %p\n", (void *)block);
+    }
 }
