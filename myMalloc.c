@@ -51,3 +51,17 @@ void *my_malloc(size_t size)
 
     return (void *)(newBlock + 1);
 }
+
+void my_free(void * ptr)
+{
+    Block *block = (Block*)ptr-1;
+    size_t totalSize = block->size + sizeof(Block);
+
+    if(munmap(block,totalSize) == -1){
+        perror("Error when free memory");
+    }else{
+        printf("Free memory\n");
+    }
+
+
+}

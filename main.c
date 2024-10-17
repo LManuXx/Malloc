@@ -14,11 +14,7 @@ int main()
         return 1;
     }
 
-    *num = 42;
-
-    printf("%i\n",*num);
-    
-    
+    my_free(num);    
 
     return 0;   
 }
